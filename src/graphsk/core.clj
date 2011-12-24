@@ -25,7 +25,7 @@
   (docs   [chart] "I am the documentation for a Bar Chart"))
 
 ;; -----------------------------------------------------------------------------
-;;  Interface to this stuff.  Factory Function.
+;;  JSON stuff
 (defn- valid-json?
   "Put in your json validation here"
   [json-data]
@@ -38,6 +38,8 @@
   ;; Do you json stuff here.  I'm returning a dummy vector for x and y.
   [[1 2 3] [4 5 6]])
 
+;; -----------------------------------------------------------------------------
+;;  Interface to this stuff.  Factory Function.
 (defn- create-chart
   "Passed in a map containing a key, :type, specifying the type of chart as well
    as other, type specific, keys.  This is the only 'hardwired' part, everything
@@ -51,7 +53,9 @@
               [_]          (throw (Exception. "Unknown Chart Type")))))
 
 ;; -----------------------------------------------------------------------------
-;;  Example of how you would use this
+;;  Example of how you would use this.  You'd want to make this generic, so that
+;;  everything except (render chart) is a template and you pass in (render chart)
+;;  or (docs chart).  Perhaps a macro is good for this ?
 (defn my-web-renderer [params]
   (try
     (let [chart (create-chart params)]
